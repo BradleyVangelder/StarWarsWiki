@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 function StarWarsFetch() {
 
     const [data, setData] = useState([])
-    let [search, setSearch] = useState("")
-    let [dataShow, setDataShow] = useState([])
+    const [search, setSearch] = useState("")
+    const [dataShow, setDataShow] = useState([])
 
     useEffect(() => {
         async function fetchPeople() {
@@ -16,10 +16,20 @@ function StarWarsFetch() {
         fetchPeople()
     }, [])
 
-    function searchFilter() {
+
+    function searchFilter(input) {
         const persons = []
         data.map(person => {
-            if(person.name.includes(search)){
+            if(person.name.toLowerCase().includes(input)){
+                const prop = {
+                    name: person.name,
+                    height: person.height,
+                    hairColor: person.hair_color,
+                    birthYear: person.birth_year
+                }
+                persons.push(prop)
+            }
+            else if(input === 'none') {
                 const prop = {
                     name: person.name,
                     height: person.height,
@@ -33,24 +43,25 @@ function StarWarsFetch() {
         setDataShow(persons)
     }
 
-    function changeHandler(event) {
-        const {value} = event.target
-        setSearch(value)
-        searchFilter()
-    }
-
-    console.log(dataShow)
-
     return(
         <div>
             <h1>Star Wars Wiki</h1>
-            <input type="text" name="search" value={search} onChange={changeHandler} />
+            <input
+                type="text"
+                name="search"
+                value={search}
+                onChange={(e) => {
+                    setSearch(e.target.value)
+                    searchFilter(e.target.value)
+                }
+            }
+            />
             {dataShow.map(person => {
                 return(
-                    <div>
+                    <div key={person.name}>
                         <h1>{person.name}</h1>
                         <p>height: {person.height}</p>
-                        <p>haircolor: {person.hairColor}</p>
+                        <p style={person.hairColor !== 'none' && person.hairColor !== 'n/a' ? {display: 'block'} : {display: 'none'}}>haircolor: {person.hairColor}</p>
                         <p>Birthyear: {person.birthYear}</p>
                     </div>
                 )
