@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container, Button, Row } from 'react-bootstrap'
-import uuid from 'uuid'
+import uuid from 'react-uuid'
 import './StarWarsFetch.css'
 
 function StarWarsFetch() {
@@ -23,7 +23,7 @@ function StarWarsFetch() {
                     height: person.height,
                     hairColor: person.hair_color,
                     birthYear: person.birth_year,
-                    id: uuid.v4()
+                    id: uuid()
                 }
                 persons.push(prop)
             })
@@ -44,7 +44,7 @@ function StarWarsFetch() {
                     height: person.height,
                     hairColor: person.hair_color,
                     birthYear: person.birth_year,
-                    id: uuid.v4()
+                    id: uuid()
                 }
                 persons.push(prop)
             }
@@ -54,7 +54,7 @@ function StarWarsFetch() {
                     height: person.height,
                     hairColor: person.hair_color,
                     birthYear: person.birth_year,
-                    id: uuid.v4()
+                    id: uuid()
                 }
                 persons.push(prop)
             }
