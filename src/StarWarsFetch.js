@@ -11,16 +11,28 @@ function StarWarsFetch() {
             const res = await fetch('https://swapi.dev/api/people/')
             const apiData = await res.json()
             setData(apiData.results)
+            const persons = []
+            data.map(person => {
+                const prop = {
+                    name: person.name,
+                    height: person.height,
+                    hairColor: person.hair_color,
+                    birthYear: person.birth_year
+                }
+                persons.push(prop)
+            })
+
+            setDataShow(persons)
         }
 
         fetchPeople()
     }, [])
 
 
-    function searchFilter(input) {
+    function searchFilter(input = " ") {
         const persons = []
         data.map(person => {
-            if(person.name.toLowerCase().includes(input)){
+            if(person.name.toLowerCase().includes(input.toLowerCase())){
                 const prop = {
                     name: person.name,
                     height: person.height,
@@ -29,7 +41,7 @@ function StarWarsFetch() {
                 }
                 persons.push(prop)
             }
-            else if(input === 'none') {
+            else if(input === "") {
                 const prop = {
                     name: person.name,
                     height: person.height,
