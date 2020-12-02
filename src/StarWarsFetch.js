@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container, Button, Row } from 'react-bootstrap'
 import uuid from 'uuid'
+import './StarWarsFetch.css'
 
 function StarWarsFetch() {
 
@@ -64,9 +65,9 @@ function StarWarsFetch() {
 
     return(
         <Container>
-            <h1 className="text-center">Star Wars Wiki</h1>
+            <h1 className="text-center font-weight-bold">Star Wars Wiki</h1>
             <input
-                className="w-100 mb-4"
+                className="w-100 mb-4 p-2"
                 type="text"
                 name="search"
                 value={search}
@@ -78,23 +79,28 @@ function StarWarsFetch() {
             />
             {dataShow.map(person => {
                 return(
-                    <div key={person.id}>
-                        <Row>
-                            <h1>{person.name}</h1>
+                    <div key={person.id} className="bg-gradient mb-3">
+                        <Row className="container p-3">
+                            <h1 className="text col-9">{person.name}</h1>
                             <Button
+                                className="btn-gradient rounded-pill col-3"
                                 value={person.id}
                                 onClick={(e) => {
-                                    setOpen(e.target.value)
+                                    if(open === e.target.value){
+                                        setOpen("")
+                                    }else{
+                                        setOpen(e.target.value)
+                                    }
                                 }}
                             >
-                                show more
+                                {person.id === open ? "show less" : "show more"}
                             </Button>
                         </Row>
-                        <div id={person.id} style={person.id === open ? {display: 'block'} : {display: 'none'}}>
-                            <p>height: {person.height}</p>
-                            <p style={person.hairColor !== 'none' && person.hairColor !== 'n/a' ? {display: 'block'} : {display: 'none'}}>haircolor: {person.hairColor}</p>
-                            <p>Birthyear: {person.birthYear}</p>
-                        </div>
+                        <Container className="p-3" id={person.id} style={person.id === open ? {display: 'block'} : {display: 'none'}}>
+                            <p><span className="font-weight-bold">height:</span> {person.height}</p>
+                            <p style={person.hairColor !== 'none' && person.hairColor !== 'n/a' ? {display: 'block'} : {display: 'none'}}><span className="font-weight-bold">Hair color:</span> {person.hairColor}</p>
+                            <p><span className="font-weight-bold">Birth year:</span> {person.birthYear}</p>
+                        </Container>
                     </div>
                 )
             })}
