@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 function StarWarsFetch() {
 
     const [data, setData] = useState([])
-    const [search, setSearch] = useState("")
-    const [dataShow, setDataShow] = useState([])
+    let [search, setSearch] = useState("")
+    let [dataShow, setDataShow] = useState([])
 
     useEffect(() => {
         async function fetchPeople() {
