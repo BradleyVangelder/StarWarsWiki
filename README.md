@@ -1,9 +1,12 @@
-## Star Wars wiki
+# Star Wars wiki
 
 Star Wars wiki is a small web application that gives you the opportunity to get some info about your favorite character,starship,droid,....
 
-### What did I Use?
+#### What did I Use?
 
 - Reactjs
 - API
 - ReactHooks
+
+
+
