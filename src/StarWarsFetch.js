@@ -36,21 +36,32 @@ function StarWarsFetch() {
       if (item.name.toLowerCase().includes(input.toLowerCase())) {
         const prop = {
           name: item.name,
-          height: item.height,
-          gender: item.gender,
-          hairColor: item.hair_color,
-          birthYear: item.birth_year,
           id: uuid(),
+          specs: {
+            height: item.height,
+            gender: item.gender,
+            hairColor: item.hair_color,
+            birthYear: item.birth_year,
+            capacity: item.cargo_capacity,
+            crew: item.crew, 
+            model: item.model,
+            consumables: item.consumables,
+            averageHeight: item.average_height,
+            language: item.language,
+            averageLifespan: item.average_lifespan,
+          }
         };
         dataArray.push(prop);
       } else if (input === "") {
         const prop = {
           name: item.name,
-          height: item.height,
-          gender: item.gender,
-          hairColor: item.hair_color,
-          birthYear: item.birth_year,
           id: uuid(),
+          specs: {
+            height: item.height,
+            gender: item.gender,
+            hairColor: item.hair_color,
+            birthYear: item.birth_year
+          }
         };
         dataArray.push(prop);
       }
@@ -84,6 +95,8 @@ function StarWarsFetch() {
           >
             <option value="people/">People</option>
             <option value="starships/">Starships</option>
+            <option value="planets/">Planets</option>
+            <option value="species/">Species</option>
           </select>
         </Row>
 
@@ -107,32 +120,22 @@ function StarWarsFetch() {
                   </Button>
                 </Row>
                 <Container
-                    className="p-3"
+                    className="p-2 ml-2"
                     id={item.id}
                     style={
                       item.id === open ? { display: "block" } : { display: "none" }
                     }
                 >
-                  <p>
-                    <span className="font-weight-bold">height:</span> {item.height}
-                  </p>
-                  <p>
-                    <span className="font-weight-bold">Gender:</span> {item.gender}
-                  </p>
-                  <p
-                      style={
-                        item.hairColor !== "none" || item.hairColor !== "n/a"
-                            ? { display: "block" }
-                            : { display: "none" }
-                      }
-                  >
-                    <span className="font-weight-bold">Hair color:</span>{" "}
-                    {item.hairColor}
-                  </p>
-                  <p>
-                    <span className="font-weight-bold">Birth year:</span>{" "}
-                    {item.birthYear}
-                  </p>
+
+                    {Object.keys(item.specs).map((key) => {
+                        //console.log(item.specs.key);
+                        console.log(item.specs[key]);
+                        return(
+                            <p>
+                                <span className="font-weight-bold" style={item.specs[key] === undefined ? { display: 'none' }: { display: 'block'}}>{key}:</span> {item.specs[key]}
+                            </p>
+                        )
+                    })}
                 </Container>
               </div>
           );
