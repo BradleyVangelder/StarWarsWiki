@@ -13,17 +13,25 @@ function StarWarsFetch() {
   const [select, setSelect] = useState("people");
 
   useEffect(() => {
+    // fetch function more compact
     fetch("https://swapi.dev/api/" + select)
+        //turn everything into JSON
         .then((r) => r.json())
+        //sends 2 params to the function first one is the data from the fetch second one is the search state
         .then((b) => searchFilter(b.results, search));
   }, [select, search]);
 
   // Filter on search and gets the input and updates the state
   function searchFilter(data, input = " ") {
+    //if there is no data passed it'll return nothing
     if (!data) {
       return;
     }
+
+    //make an array for the datafiltering
     const dataArray = [];
+
+    //map through the data
     data.map((item) => {
       if (item.name.toLowerCase().includes(input.toLowerCase())) {
         const prop = {
