@@ -69,7 +69,8 @@ function StarWarsFetch() {
         .then((r) => r.json())
         //sends 2 params to the function first one is the data from the fetch second one is the search state
         .then((b) => searchFilter(b.results, search));
-  }, [select, search, dataShow]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [select, search]);
 
   // Filter on search and gets the input and updates the state
 
