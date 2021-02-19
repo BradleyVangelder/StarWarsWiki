@@ -13,63 +13,65 @@ function StarWarsFetch() {
   const [select, setSelect] = useState("people");
 
   useEffect(() => {
+    function searchFilter(data, input = " ") {
+      //if there is no data passed it'll return nothing
+      if (!data) {
+        return;
+      }
+  
+      //make an array for the datafiltering
+      const dataArray = [];
+  
+      //map through the data
+      // eslint-disable-next-line array-callback-return
+      data.map((item) => {
+        if (item.name.toLowerCase().includes(input.toLowerCase())) {
+          const prop = {
+            name: item.name,
+            id: uuid(),
+            specs: {
+              height: item.height,
+              gender: item.gender,
+              hairColor: item.hair_color,
+              birthYear: item.birth_year,
+              capacity: item.cargo_capacity,
+              crew: item.crew, 
+              model: item.model,
+              consumables: item.consumables,
+              averageHeight: item.average_height,
+              language: item.language,
+              averageLifespan: item.average_lifespan,
+            }
+          };
+          dataArray.push(prop);
+        } else if (input === "") {
+          const prop = {
+            name: item.name,
+            id: uuid(),
+            specs: {
+              height: item.height,
+              gender: item.gender,
+              hairColor: item.hair_color,
+              birthYear: item.birth_year
+            }
+          };
+          dataArray.push(prop);
+        }
+      });
+  
+      setDataShow(dataArray);
+      console.log(dataShow);
+    }
+
     // fetch function more compact
     fetch("https://swapi.dev/api/" + select)
         //turn everything into JSON
         .then((r) => r.json())
         //sends 2 params to the function first one is the data from the fetch second one is the search state
         .then((b) => searchFilter(b.results, search));
-  }, [select, search]);
+  }, [select, search, dataShow]);
 
   // Filter on search and gets the input and updates the state
-  function searchFilter(data, input = " ") {
-    //if there is no data passed it'll return nothing
-    if (!data) {
-      return;
-    }
-
-    //make an array for the datafiltering
-    const dataArray = [];
-
-    //map through the data
-    data.map((item) => {
-      if (item.name.toLowerCase().includes(input.toLowerCase())) {
-        const prop = {
-          name: item.name,
-          id: uuid(),
-          specs: {
-            height: item.height,
-            gender: item.gender,
-            hairColor: item.hair_color,
-            birthYear: item.birth_year,
-            capacity: item.cargo_capacity,
-            crew: item.crew, 
-            model: item.model,
-            consumables: item.consumables,
-            averageHeight: item.average_height,
-            language: item.language,
-            averageLifespan: item.average_lifespan,
-          }
-        };
-        dataArray.push(prop);
-      } else if (input === "") {
-        const prop = {
-          name: item.name,
-          id: uuid(),
-          specs: {
-            height: item.height,
-            gender: item.gender,
-            hairColor: item.hair_color,
-            birthYear: item.birth_year
-          }
-        };
-        dataArray.push(prop);
-      }
-    });
-
-    setDataShow(dataArray);
-    console.log(dataShow);
-  }
 
   return (
       <Container>
